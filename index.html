@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>US Soccer Lineup Builder</title>
+  <link href="lineup.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!--script src="https://github.com/pocketbase/js-sdk/tree/master/dist/pocketbase.umd.js"></script-->
+  <script src="/js-sdk-master/dist/pocketbase.umd.js"></script>
+  <!--script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.12.1/pocketbase.cjs.min.js" integrity="sha512-w2+reloM7aTXY/1UA6PtVX+MDEMX0C3laWOK1PLuLhCQL40+UDTrsKku9g4HJPwE9yk3IKxAaZ/q2gzr+G2cTw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script-->
+  <script src="lineup.js" type="module"></script>
+</head>
+
+<body>
+
+  <!--Top Section-->
+  <div class="container" style="display: flex; align-items: center; text-align: center; justify-content: center;">
+    <img
+      src="https://cdn.ussoccer.com/-/jssmedia/project/ussf/generic-p1-and-tn/whitecresttn.ashx?h=1440&la=en-US&w=1440&rev=59f2bb17d7974b2280484ccaa78ab38c&hash=549A518F0F3B414CB6E6C35848658DF6"
+      alt="US Soccer logo image" width="200" height="200">
+    <h1>US Soccer Lineup Builder</h1>
+    <img
+      src="https://cdn.ussoccer.com/-/jssmedia/project/ussf/generic-p1-and-tn/whitecresttn.ashx?h=1440&la=en-US&w=1440&rev=59f2bb17d7974b2280484ccaa78ab38c&hash=549A518F0F3B414CB6E6C35848658DF6"
+      alt="US Soccer logo image" width="200" height="200">
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <p style="text-align: center;">Welcome to the US Soccer Lineup Builder!</p>
+      <p>Directions: </p>
+      <p>1. Use the buttons at the top to select whether you'd like to 
+        build your squad for the US men's national team or the US Women's national team. 
+      </p>
+      <p>2. Use the formation buttons to select the formation you'd like to build your squad in.
+        If you change formations, your player selections will be cleared!
+      </p>
+      <p>3. Use the drop-down menus to select a player for each position OR type a name in the
+        text box if the player you want isn't listed. You should select 26 players: two for each outfield
+        position, 3 goalkeepers, and 3 other players of any position.
+      </p>
+      <p>4. Press the "Submit" button to save your data to the server. If you want to start
+        from scratch, press the "Clear" button to get a blank page.
+      </p>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <br>
+  <hr>
+
+  <!--Container for the buttons to change the overall page layout-->
+  <div class="container">
+    <div class="row buttonrow">
+      <button class="teamButton" id="mensButton">Men's</button>
+      <button class="teamButton" id="womensButton">Women's</button>
+    </div>
+    <hr>
+    <br>
+    <!--Place the buttons in this row-->
+    <div class="row buttonrow">
+      <button class="formationButton" id="433_button">433</button>
+      <button class="formationButton" id="4231_button">4231</button>
+      <button class="formationButton" id="442_button">442</button>
+      <button class="formationButton" id="343_button">343</button>
+      <button class="formationButton" id="352_button">352</button>
+    </div>
+  </div>
+
+  <br>
+  <hr>
+  <br>
+
+  <!--Containers to adjust the display for various formations-->
+
+  <!--Container for the 4-3-3 formation-->
+  <div class="container formation display" id="433">
+    <br>
+    <br>
+
+    <!--Row for the forwards-->
+    <div class="row playerrow" id="forwardRow">
+      <div class="col-sm-4" id="leftWingColumn">
+        Left Wing
+        <br>
+        <label for="leftwing1">LW1:</label>
+        <input type="text" id="433leftwing1" name="433leftwing1" value="">
+        <select id="433leftwing1_options" name="433leftwing1_options" class="dropdown"></select>
+        <br>
+        <label for="leftwing2">LW2:</label>
+        <input type="text" id="433leftwing2" name="433leftwing2" value="">
+        <select id="433leftwing2_options" name="433leftwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="centerForwardColumn">
+        Center Forward
+        <br>
+        <label for="centerforward1">CF1:</label>
+        <input type="text" id="433centerforward1" name="433centerforward1" value="">
+        <select id="433centerforward1_options" name="433centerforward1_options" class="dropdown"></select>
+        <br>
+        <label for="centerforward2">CF2:</label>
+        <input type="text" id="433centerforward2" name="433centerforward2" value="">
+        <select id="433centerforward2_options" name="433centerforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="rightWingColumn">
+        Right Wing
+        <br>
+        <label for="rightwing1">RW1:</label>
+        <input type="text" id="433rightwing1" name="433rightwing1" value="">
+        <select id="433rightwing1_options" name="433rightwing1_options" class="dropdown"></select>
+        <br>
+        <label for="rightwing2">RW2:</label>
+        <input type="text" id="433rightwing2" name="433rightwing2" value="">
+        <select id="433rightwing2_options" name="433rightwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the midfielders-->
+    <div class="row playerrow" id="midfieldRow">
+      <div class="col-sm-4" id="leftMidColumn">
+        Left Midfielder
+        <br>
+        <label for="leftmid1">LM1:</label>
+        <input type="text" id="433leftmid1" name="433leftmid1" value="">
+        <select id="433leftmid1_options" name="433leftmid1_options" class="dropdown"></select>
+        <br>
+        <label for="leftmid2">LM2:</label>
+        <input type="text" id="433leftmid2" name="433leftmid2" value="">
+        <select id="433leftmid2_options" name="433leftmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="centerMidColumn">
+        Center Midfielder
+        <br>
+        <label for="centermid1">CM1:</label>
+        <input type="text" id="433centermid1" name="433centermid1" value="">
+        <select id="433centermid1_options" name="433centermid1_options" class="dropdown"></select>
+        <br>
+        <label for="centermid2">CM2:</label>
+        <input type="text" id="433centermid2" name="433centermid2" value="">
+        <select id="433centermid2_options" name="433centermid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="rightMidColumn">
+        Right Midfielder
+        <br>
+        <label for="rightmid1">RM1:</label>
+        <input type="text" id="433rightmid1" name="433rightmid1" value="">
+        <select id="433rightmid1_options" name="433rightmid1_options" class="dropdown"></select>
+        <br>
+        <label for="rightmid2">RM2:</label>
+        <input type="text" id="433rightmid2" name="433rightmid2" value="">
+        <select id="433rightmid2_options" name="433rightmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the defenders-->
+    <div class="row playerrow" id="defenderRow">
+      <div class="col-sm-3" id="leftBackColumn">
+        Left Back
+        <br>
+        <label for="leftback1">LB1:</label>
+        <input type="text" id="433leftback1" name="433leftback1" value="">
+        <select id="433leftback1_options" name="433leftback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftback2">LB2:</label>
+        <input type="text" id="433leftback2" name="433leftback2" value="">
+        <select id="433leftback2_options" name="433leftback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="leftCenterBackColumn">
+        Left Center Back
+        <br>
+        <label for="leftcenterback1">LCB1:</label>
+        <input type="text" id="433leftcenterback1" name="433leftcenterback1" value="">
+        <select id="433leftcenterback1_options" name="433leftcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftcenterback2">LCB2:</label>
+        <input type="text" id="433leftcenterback2" name="433leftcenterback2" value="">
+        <select id="433leftcenterback2_options" name="433leftcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightCenterBackColumn">
+        Right Center Back
+        <br>
+        <label for="rightcenterback1">RCB1:</label>
+        <input type="text" id="433rightcenterback1" name="433rightcenterback1" value="">
+        <select id="433rightcenterback1_options" name="433rightcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightcenterback2">RCB2:</label>
+        <input type="text" id="433rightcenterback2" name="433rightcenterback2" value="">
+        <select id="433rightcenterback2_options" name="433rightcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightBackColumn">
+        Right Back
+        <br>
+        <label for="rightback1">RB1:</label>
+        <input type="text" id="433rightback1" name="433rightback1" value="">
+        <select id="433rightback1_options" name="433rightback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightback2">RB2:</label>
+        <input type="text" id="433rightback2" name="433rightback2" value="">
+        <select id="433rightback2_options" name="433rightback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the goalkeepers-->
+    <div class="row playerrow" id="goalkeeperRow">
+      <div class="col-sm-12" id="goalkeeperColumn">
+        Goalkeeper
+        <br>
+        <label for="goalkeeper1">GK1:</label>
+        <input type="text" id="433goalkeeper1" name="433goalkeeper1">
+        <select id="433goalkeeper1_options" name="433goalkeeper1_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper2">GK2:</label>
+        <input type="text" id="433goalkeeper2" name="433goalkeeper2">
+        <select id="433goalkeeper2_options" name="433goalkeeper2_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper3">GK3:</label>
+        <input type="text" id="433goalkeeper3" name="433goalkeeper3">
+        <select id="433goalkeeper3_options" name="433goalkeeper3_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!--Container for the 4-2-3-1 formation-->
+  <div class="container formation" id="4231">
+    <br>
+    <br>
+
+
+    <!--Row for the forwards-->
+    <div class="row playerrow" id="forwardRow">
+      <div class="col-sm-12" id="centerForwardColumn">
+        Center Forward
+        <br>
+        <label for="centerforward1">CF1:</label>
+        <input type="text" id="4231centerforward1" name="4231centerforward1" value="">
+        <select id="4231centerforward1_options" name="4231centerforward1_options" class="dropdown"></select>
+        <br>
+        <label for="centerforward2">CF2:</label>
+        <input type="text" id="4231centerforward2" name="4231centerforward2" value="">
+        <select id="4231centerforward2_options" name="4231centerforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the attacking midfielders-->
+    <div class="row playerrow" id="attackingMidRow">
+      <div class="col-sm-4" id="leftWingColumn">
+        Left Wing
+        <br>
+        <label for="leftwing1">LW1:</label>
+        <input type="text" id="4231leftwing1" name="4231leftwing1" value="">
+        <select id="4231leftwing1_options" name="4231leftwing1_options" class="dropdown"></select>
+        <br>
+        <label for="leftwing2">LW2:</label>
+        <input type="text" id="4231leftwing2" name="4231leftwing2" value="">
+        <select id="4231leftwing2_options" name="4231leftwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="centerForwardColumn">
+        Center Attacking Mid
+        <br>
+        <label for="cam1">CAM1:</label>
+        <input type="text" id="4231cam1" name="4231cam1" value="">
+        <select id="4231cam1_options" name="4231cam1_options" class="dropdown"></select>
+        <br>
+        <label for="cam1">CAM2:</label>
+        <input type="text" id="4231cam2" name="4231cam2" value="">
+        <select id="4231cam2_options" name="4231cam2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="rightWingColumn">
+        Right Wing
+        <br>
+        <label for="rightwing1">RW1:</label>
+        <input type="text" id="4231rightwing1" name="4231rightwing1" value="">
+        <select id="4231rightwing1_options" name="4231rightwing1_options" class="dropdown"></select>
+        <br>
+        <label for="rightwing2">RW2:</label>
+        <input type="text" id="4231rightwing2" name="4231rightwing2" value="">
+        <select id="4231rightwing2_options" name="4231rightwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the midfielders-->
+    <div class="row playerrow" id="midfieldRow">
+      <div class="col-sm-6" id="leftMidColumn">
+        Left Midfielder
+        <br>
+        <label for="leftmid1">LM1:</label>
+        <input type="text" id="4231leftmid1" name="4231leftmid1" value="">
+        <select id="4231leftmid1_options" name="4231leftmid1_options" class="dropdown"></select>
+        <br>
+        <label for="leftmid2">LM2:</label>
+        <input type="text" id="4231leftmid2" name="4231leftmid2" value="">
+        <select id="4231leftmid2_options" name="4231leftmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-6" id="centerMidColumn">
+        Right Midfielder
+        <br>
+        <label for="centermid1">RM1:</label>
+        <input type="text" id="4231rightmid1" name="4231rightmid1" value="">
+        <select id="4231rightmid1_options" name="4231rightmid1_options" class="dropdown"></select>
+        <br>
+        <label for="centermid2">RM2:</label>
+        <input type="text" id="4231rightmid2" name="4231rightmid2" value="">
+        <select id="4231rightmid2_options" name="4231rightmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the defenders-->
+    <div class="row playerrow" id="defenderRow">
+      <div class="col-sm-3" id="leftBackColumn">
+        Left Back
+        <br>
+        <label for="leftback1">LB1:</label>
+        <input type="text" id="4231leftback1" name="4231leftback1" value="">
+        <select id="4231leftback1_options" name="4231leftback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftback2">LB2:</label>
+        <input type="text" id="4231leftback2" name="4231leftback2" value="">
+        <select id="4231leftback2_options" name="4231leftback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="leftCenterBackColumn">
+        Left Center Back
+        <br>
+        <label for="leftcenterback1">LCB1:</label>
+        <input type="text" id="4231leftcenterback1" name="4231leftcenterback1" value="">
+        <select id="4231leftcenterback1_options" name="4231leftcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftcenterback2">LCB2:</label>
+        <input type="text" id="4231leftcenterback2" name="4231leftcenterback2" value="">
+        <select id="4231leftcenterback2_options" name="4231leftcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightCenterBackColumn">
+        Right Center Back
+        <br>
+        <label for="rightcenterback1">RCB1:</label>
+        <input type="text" id="4231rightcenterback1" name="4231rightcenterback1" value="">
+        <select id="4231rightcenterback1_options" name="4231rightcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightcenterback2">RCB2:</label>
+        <input type="text" id="4231rightcenterback2" name="4231rightcenterback2" value="">
+        <select id="4231rightcenterback2_options" name="4231rightcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightBackColumn">
+        Right Back
+        <br>
+        <label for="rightback1">RB1:</label>
+        <input type="text" id="4231rightback1" name="4231rightback1" value="">
+        <select id="4231rightback1_options" name="4231rightback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightback2">RB2:</label>
+        <input type="text" id="4231rightback2" name="4231rightback2" value="">
+        <select id="4231rightback2_options" name="4231rightback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the goalkeepers-->
+    <div class="row playerrow" id="goalkeeperRow">
+      <div class="col-sm-12" id="goalkeeperColumn">
+        Goalkeeper
+        <br>
+        <label for="goalkeeper1">GK1:</label>
+        <input type="text" id="4231goalkeeper1" name="4231goalkeeper1">
+        <select id="4231goalkeeper1_options" name="4231goalkeeper1_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper2">GK2:</label>
+        <input type="text" id="4231goalkeeper2" name="4231goalkeeper2">
+        <select id="4231goalkeeper2_options" name="4231goalkeeper2_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper3">GK3:</label>
+        <input type="text" id="4231goalkeeper3" name="4231goalkeeper3">
+        <select id="4231goalkeeper3_options" name="4231goalkeeper3_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!--Container for the 4-4-2 formation-->
+  <div class="container formation" id="442">
+    <br>
+    <br>
+    <!--Row for the forwards-->
+    <div class="row playerrow" id="forwardRow">
+      <div class="col-sm-6" id="leftForwardColumn">
+        Left Forward
+        <br>
+        <label for="leftforward1">LF1:</label>
+        <input type="text" id="442leftforward1" name="442leftforward1" value="">
+        <select id="442leftforward1_options" name="442leftforward1_options" class="dropdown"></select>
+        <br>
+        <label for="leftforward2">LF2:</label>
+        <input type="text" id="442leftforward2" name="442leftforward2" value="">
+        <select id="442leftforward2_options" name="442leftforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-6" id="rightForwardColumn">
+        Right Forward
+        <br>
+        <label for="rightforward1">RF1:</label>
+        <input type="text" id="442rightforward1" name="442rightforward1" value="">
+        <select id="442rightforward1_options" name="442rightforward1_options" class="dropdown"></select>
+        <br>
+        <label for="rightforward2">RF2:</label>
+        <input type="text" id="442rightforward2" name="442rightforward2" value="">
+        <select id="442rightforward2_options" name="442rightforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the midfielders-->
+    <div class="row playerrow" id="midfieldRow">
+      <div class="col-sm-3" id="leftWingColumn">
+        Left Wing
+        <br>
+        <label for="leftwingback1">LW1:</label>
+        <input type="text" id="442leftwing1" name="442leftwing1" value="">
+        <select id="442leftwing1_options" name="442leftwing1_options" class="dropdown"></select>
+        <br>
+        <label for="leftwingback2">LW2:</label>
+        <input type="text" id="442leftwing2" name="442leftwing2" value="">
+        <select id="442leftwing2_options" name="442leftwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="leftMidColumn">
+        Left Midfielder
+        <br>
+        <label for="leftmid1">LM1:</label>
+        <input type="text" id="442leftmid1" name="442leftmid1" value="">
+        <select id="442leftmid1_options" name="442leftmid1_options" class="dropdown"></select>
+        <br>
+        <label for="leftmid2">LM2:</label>
+        <input type="text" id="442leftmid2" name="442leftmid2" value="">
+        <select id="442leftmid2_options" name="442leftmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightMidColumn">
+        Right Midfielder
+        <br>
+        <label for="rightmid1">RM1:</label>
+        <input type="text" id="442rightmid1" name="442rightmid1" value="">
+        <select id="442rightmid1_options" name="442rightmid1_options" class="dropdown"></select>
+        <br>
+        <label for="rightmid2">RM2:</label>
+        <input type="text" id="442rightmid2" name="442rightmid2" value="">
+        <select id="442rightmid2_options" name="442rightmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+
+      <div class="col-sm-3" id="rightWingColumn">
+        Right Wing
+        <br>
+        <label for="rightwingback1">RW1:</label>
+        <input type="text" id="442rightwing1" name="442rightwing1" value="">
+        <select id="442rightwing1_options" name="442rightwing1_options" class="dropdown"></select>
+        <br>
+        <label for="rightwingback2">RW2:</label>
+        <input type="text" id="442rightwing2" name="442rightwing2" value="">
+        <select id="442rightwing2_options" name="442rightwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <!--Row for the defenders-->
+    <div class="row playerrow" id="defenderRow">
+      <div class="col-sm-3" id="leftBackColumn">
+        Left Back
+        <br>
+        <label for="leftback1">LB1:</label>
+        <input type="text" id="442leftback1" name="442leftback1" value="">
+        <select id="442leftback1_options" name="442leftback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftback2">LB2:</label>
+        <input type="text" id="442leftback2" name="442leftback2" value="">
+        <select id="442leftback2_options" name="442leftback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="leftCenterBackColumn">
+        Left Center Back
+        <br>
+        <label for="leftcenterback1">LCB1:</label>
+        <input type="text" id="442leftcenterback1" name="442leftcenterback1" value="">
+        <select id="442leftcenterback1_options" name="442leftcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftcenterback2">LCB2:</label>
+        <input type="text" id="442leftcenterback2" name="442leftcenterback2" value="">
+        <select id="442leftcenterback2_options" name="442leftcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightCenterBackColumn">
+        Right Center Back
+        <br>
+        <label for="rightcenterback1">RCB1:</label>
+        <input type="text" id="442rightcenterback1" name="442rightcenterback1" value="">
+        <select id="442rightcenterback1_options" name="442rightcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightcenterback2">RCB2:</label>
+        <input type="text" id="442rightcenterback2" name="442rightcenterback2" value="">
+        <select id="442rightcenterback2_options" name="442rightcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightBackColumn">
+        Right Back
+        <br>
+        <label for="rightback1">RB1:</label>
+        <input type="text" id="442rightback1" name="442rightback1" value="">
+        <select id="442rightback1_options" name="442rightback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightback2">RB2:</label>
+        <input type="text" id="442rightback2" name="442rightback2" value="">
+        <select id="442rightback2_options" name="442rightback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the goalkeepers-->
+    <div class="row playerrow" id="goalkeeperRow">
+      <div class="col-sm-12" id="goalkeeperColumn">
+        Goalkeeper
+        <br>
+        <label for="goalkeeper1">GK1:</label>
+        <input type="text" id="442goalkeeper1" name="442goalkeeper1">
+        <select id="442goalkeeper1_options" name="442goalkeeper1_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper2">GK2:</label>
+        <input type="text" id="442goalkeeper2" name="442goalkeeper2">
+        <select id="442goalkeeper2_options" name="442goalkeeper2_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper3">GK3:</label>
+        <input type="text" id="442goalkeeper3" name="442goalkeeper3">
+        <select id="442goalkeeper3_options" name="442goalkeeper3_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+    <br>
+
+  </div>
+
+
+  <!--Container for the 3-4-3 formation-->
+  <div class="container formation" id="343">
+    <br>
+    <br>
+
+    <!--Row for the forwards-->
+    <div class="row playerrow" id="forwardRow">
+      <div class="col-sm-4" id="leftForwardColumn">
+        Left Wing
+        <br>
+        <label for="leftwing1">LW1:</label>
+        <input type="text" id="343leftwing1" name="343leftwing1" value="">
+        <select id="343leftwing1_options" name="343leftwing1_options" class="dropdown"></select>
+        <br>
+        <label for="leftwing2">LW2:</label>
+        <input type="text" id="343leftwing2" name="343leftwing2" value="">
+        <select id="343leftwing2_options" name="343leftwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4">
+        Center Forward
+        <br>
+        <label for="centerforward1">CF1:</label>
+        <input type="text" id="343centerforward1" name="343centerforward1" value="">
+        <select id="343centerforward1_options" name="343centerforward1_options" class="dropdown"></select>
+        <br>
+        <label for="centerforward2">CF2:</label>
+        <input type="text" id="343centerforward2" name="343centerforward2" value="">
+        <select id="343centerforward2_options" name="343centerforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="rightForwardColumn">
+        Right Wing
+        <br>
+        <label for="rightwing1">RW1:</label>
+        <input type="text" id="343rightwing1" name="343rightwing1" value="">
+        <select id="343rightwing1_options" name="343rightwing1_options" class="dropdown"></select>
+        <br>
+        <label for="rightwing2">RW2:</label>
+        <input type="text" id="343rightwing2" name="343rightwing2" value="">
+        <select id="343rightwing2_options" name="343rightwing2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the midfielders-->
+    <div class="row playerrow" id="midfieldRow">
+      <div class="col-sm-3" id="leftWingbackColumn">
+        Left Wingback
+        <br>
+        <label for="leftwingback1">LWB1:</label>
+        <input type="text" id="343leftwingback1" name="343leftwingback1" value="">
+        <select id="343leftwingback1_options" name="343leftwingback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftwingback2">LWB2:</label>
+        <input type="text" id="343leftwingback2" name="343leftwingback2" value="">
+        <select id="343leftwingback2_options" name="343leftwingback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="leftMidColumn">
+
+        Left Midfielder
+        <br>
+        <label for="leftmid1">LM1:</label>
+        <input type="text" id="343leftmid1" name="343leftmid1" value="">
+        <select id="343leftmid1_options" name="343leftmid1_options" class="dropdown"></select>
+        <br>
+        <label for="leftmid2">LM2:</label>
+        <input type="text" id="343leftmid2" name="343leftmid2" value="">
+        <select id="343leftmid2_options" name="343leftmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightMidColumn">
+
+        Right Midfielder
+        <br>
+        <label for="rightmid1">RM1:</label>
+        <input type="text" id="343rightmid1" name="343rightmid1" value="">
+        <select id="343rightmid1_options" name="343rightmid1_options" class="dropdown"></select>
+        <br>
+        <label for="rightmid2">RM2:</label>
+        <input type="text" id="343rightmid2" name="343rightmid2" value="">
+        <select id="343rightmid2_options" name="343rightmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-3" id="rightWingBackColumn">
+        Right Wingback
+        <br>
+        <label for="rightwingback1">RWB1:</label>
+        <input type="text" id="343rightwingback1" name="343rightwingback1" value="">
+        <select id="343rightwingback1_options" name="343rightwingback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightwingback2">LM2:</label>
+        <input type="text" id="343rightwingback2" name="343rightwingback2" value="">
+        <select id="343rightwingback2_options" name="343rightwingback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the defenders-->
+    <div class="row playerrow" id="defenderRow">
+      <div class="col-sm-4" id="leftCenterBackColumn">
+        Left Center Back
+        <br>
+        <label for="leftcenterback1">LCB1:</label>
+        <input type="text" id="343leftcenterback1" name="343leftcenterback1" value="">
+        <select id="343leftcenterback1_options" name="343leftcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftcenterback2">LCB2:</label>
+        <input type="text" id="343leftcenterback2" name="343leftcenterback2" value="">
+        <select id="343leftcenterback2_options" name="343leftcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="centerCenterBackColumn">
+        Center Center Back
+        <br>
+        <label for="centercenterback1">CCB1:</label>
+        <input type="text" id="343centercenterback1" name="343centercenterback1" value="">
+        <select id="343centercenterback1_options" name="343centercenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="centercenterback2">CCB2:</label>
+        <input type="text" id="343centercenterback2" name="343centercenterback2" value="">
+        <select id="343centercenterback2_options" name="343centercenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="rightCenterBackColumn">
+        Right Center Back
+        <br>
+        <label for="rightcenterback1">RCB1:</label>
+        <input type="text" id="343rightcenterback1" name="343rightcenterback1" value="">
+        <select id="343rightcenterback1_options" name="343rightcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightcenterback2">RCB2:</label>
+        <input type="text" id="343rightcenterback2" name="343rightcenterback2" value="">
+        <select id="343rightcenterback2_options" name="343rightcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the goalkeepers-->
+    <div class="row playerrow" id="goalkeeperRow">
+      <div class="col-sm-12" id="goalkeeperColumn">
+        Goalkeeper
+        <br>
+        <label for="goalkeeper1">GK1:</label>
+        <input type="text" id="343goalkeeper1" name="343goalkeeper1">
+        <select id="343goalkeeper1_options" name="343goalkeeper1_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper2">GK2:</label>
+        <input type="text" id="343goalkeeper2" name="343goalkeeper2">
+        <select id="343goalkeeper2_options" name="343goalkeeper2_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper3">GK3:</label>
+        <input type="text" id="343goalkeeper3" name="343goalkeeper3">
+        <select id="343goalkeeper3_options" name="343goalkeeper3_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!--Container for the 3-5-2 formation-->
+  <div class="container formation" id="352">
+    <br>
+    <br>
+
+    <!--Row for the forwards-->
+    <div class="row playerrow" id="forwardRow">
+      <div class="col-sm-6" id="leftForwardColumn">
+        Left Forward
+        <br>
+        <label for="leftforward1">LF1:</label>
+        <input type="text" id="352leftforward1" name="352leftforward1" value="">
+        <select id="352leftforward1_options" name="352leftforward1_options" class="dropdown"></select>
+        <br>
+        <label for="leftforward2">LF2:</label>
+        <input type="text" id="352leftforward2" name="352leftforward2" value="">
+        <select id="352leftforward2_options" name="352leftforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-6" id="rightForwardColumn">
+        Right Forward
+        <br>
+        <label for="rightforward1">RF1:</label>
+        <input type="text" id="352rightforward1" name="352rightforward1" value="">
+        <select id="352rightforward1_options" name="352rightforward1_options" class="dropdown"></select>
+        <br>
+        <label for="rightforward2">RF2:</label>
+        <input type="text" id="352rightforward2" name="352rightforward2" value="">
+        <select id="352rightforward2_options" name="352rightforward2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the midfielders-->
+    <div class="row playerrow" id="midfieldRow">
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-2" id="leftWingbackColumn">
+        Left Wingback
+        <br>
+        <label for="leftwingback1">LWB1:</label>
+        <input type="text" id="352leftwingback1" name="352leftwingback1" value="">
+        <select id="352leftwingback1_options" name="352leftwingback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftwingback2">LWB2:</label>
+        <input type="text" id="352leftwingback2" name="352leftwingback2" value="">
+        <select id="352leftwingback2_options" name="352leftwingback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-2" id="leftMidColumn">
+        Left Midfielder
+        <br>
+        <label for="leftmid1">LM1:</label>
+        <input type="text" id="352leftmid1" name="352leftmid1" value="">
+        <select id="352leftmid1_options" name="352leftmid1_options" class="dropdown"></select>
+        <br>
+        <label for="leftmid2">LM2:</label>
+        <input type="text" id="352leftmid2" name="352leftmid2" value="">
+        <select id="352leftmid2_options" name="352leftmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-2" id="centerMidColumn">
+        Center Midfielder
+        <br>
+        <label for="centermid1">CM1:</label>
+        <input type="text" id="352centermid1" name="352centermid1" value="">
+        <select id="352centermid1_options" name="352centermid1_options" class="dropdown"></select>
+        <br>
+        <label for="centermid2">CM2:</label>
+        <input type="text" id="352centermid2" name="352centermid2" value="">
+        <select id="352centermid2_options" name="352centermid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-2" id="rightMidColumn">
+        Right Midfielder
+        <br>
+        <label for="rightmid1">RM1:</label>
+        <input type="text" id="352rightmid1" name="352rightmid1" value="">
+        <select id="352rightmid1_options" name="352rightmid1_options" class="dropdown"></select>
+        <br>
+        <label for="rightmid2">RM2:</label>
+        <input type="text" id="352rightmid2" name="352rightmid2" value="">
+        <select id="352rightmid2_options" name="352rightmid2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-2" id="leftMidColumn">
+        Right Wingback
+        <br>
+        <label for="rightwingback1">RWB1:</label>
+        <input type="text" id="352rightwingback1" name="352rightwingback1" value="">
+        <select id="352rightwingback1_options" name="352rightwingback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightwingback2">LM2:</label>
+        <input type="text" id="352rightwingback2" name="352rightwingback2" value="">
+        <select id="352rightwingback2_options" name="352rightwingback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-1">
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the defenders-->
+    <div class="row playerrow" id="defenderRow">
+      <div class="col-sm-4" id="leftCenterBackColumn">
+        Left Center Back
+        <br>
+        <label for="leftcenterback1">LCB1:</label>
+        <input type="text" id="352leftcenterback1" name="352leftcenterback1" value="">
+        <select id="352leftcenterback1_options" name="352leftcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="leftcenterback2">LCB2:</label>
+        <input type="text" id="352leftcenterback2" name="352leftcenterback2" value="">
+        <select id="352leftcenterback2_options" name="352leftcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="centerCenterBackColumn">
+        Center Center Back
+        <br>
+        <label for="centercenterback1">CCB1:</label>
+        <input type="text" id="352centercenterback1" name="352centercenterback1" value="">
+        <select id="352centercenterback1_options" name="352centercenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="centercenterback2">CCB2:</label>
+        <input type="text" id="352centercenterback2" name="352centercenterback2" value="">
+        <select id="352centercenterback2_options" name="352centercenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+      <div class="col-sm-4" id="rightCenterBackColumn">
+        Right Center Back
+        <br>
+        <label for="rightcenterback1">RCB1:</label>
+        <input type="text" id="352rightcenterback1" name="352rightcenterback1" value="">
+        <select id="352rightcenterback1_options" name="352rightcenterback1_options" class="dropdown"></select>
+        <br>
+        <label for="rightcenterback2">RCB2:</label>
+        <input type="text" id="352rightcenterback2" name="352rightcenterback2" value="">
+        <select id="352rightcenterback2_options" name="352rightcenterback2_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <br>
+
+    <!--Row for the goalkeepers-->
+    <div class="row playerrow" id="goalkeeperRow">
+      <div class="col-sm-12" id="goalkeeperColumn">
+        Goalkeeper
+        <br>
+        <label for="goalkeeper1">GK1:</label>
+        <input type="text" id="352goalkeeper1" name="352goalkeeper1">
+        <select id="352goalkeeper1_options" name="352goalkeeper1_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper2">GK2:</label>
+        <input type="text" id="352goalkeeper2" name="352goalkeeper2">
+        <select id="352goalkeeper2_options" name="352goalkeeper2_options" class="dropdown"></select>
+        <br>
+        <label for="goalkeeper3">GK3:</label>
+        <input type="text" id="352goalkeeper3" name="352goalkeeper3">
+        <select id="352goalkeeper3_options" name="352goalkeeper3_options" class="dropdown"></select>
+        <br>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <!--Extra section for the last three players irrespective of formation-->
+  <div class="row playerrow" id="lastthreeplayers">
+    <div class="col-sm-12">
+      Last Three Players
+      <br>
+      <label for="alt1">Player 1:</label>
+      <input type="text" id="alt1" name="alt1" value="">
+      <select id="alt1_options" name="alt1_options"></select>
+      <br>
+      <label for="alt2">Player 2:</label>
+      <input type="text" id="alt2" name="alt2" value="">
+      <select id="alt2_options" name="alt2_options"></select>
+      <br>
+      <label for="alt3">Player 3:</label>
+      <input type="text" id="alt3" name="alt3" value="">
+      <select id="alt3_options" name="alt3_options"></select>
+      <br>
+    </div>
+  </div>
+
+
+  <br>
+  <br>
+
+
+  <!--Container for the submit and clear buttons-->
+  <div class="container">
+    <!--Place the buttons in this row-->
+    <div class="row buttonrow">
+      <button class="otherButton" type="button" style="background-color:green;" onclick="saveData();">Submit</button>
+      <button class="otherButton" type="button" style="background-color:blue;" onclick="test();">Random</button>
+      <button class="otherButton" type="button" style="background-color:red;" onclick="clearAll();">Clear</button>
+    </div>
+  </div>
+
+
+  <br>
+
+</body>

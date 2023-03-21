@@ -1,0 +1,81 @@
+.row {
+  text-align: center;
+  font-size: 24px;
+}
+
+.playerrow {
+  display: flex;
+  text-align: center;
+  font-size: small;
+}
+
+.formationButton {
+  text-align: center;
+  display: block;
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+  background-color:white;
+}
+
+.teamButton{
+  text-align: center;
+  display: block;
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+  background-color:white;
+}
+
+.otherButton {
+  text-align: center;
+  display: block;
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+}
+
+.buttonrow {
+  align-content: center;
+}
+
+.formation {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Boisko.svg/1200px-Boisko.svg.png') no-repeat;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+input[type="text"] {
+  width: 100px;
+}
+
+.dropdown {
+  width: 100px;
+}
+
+.display {
+  display: block;
+}
+
+.formation {
+  display: none;
+}
+
+#433 {
+  display: block;
+}
+
+p {
+  text-align: left;
+  font-size: 0.75em;
+}
+
+.highlight{
+  background-color: cyan;
+}
+
+
